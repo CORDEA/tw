@@ -5,9 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class LoginActivity : AppCompatActivity(),
     ViewModelInjectable<LoginViewModel>,
     CoroutineScope by MainScope() {
@@ -25,6 +29,12 @@ class LoginActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         setSupportActionBar(toolbar)
+
+        val intent = Intent(this, MainActivity::class.java)
+        launch {
+            viewModel.onLoggedIn
+                .consumeEach { startActivity(intent) }
+        }
 
         loginButton.callback = viewModel.loginCallback
     }
