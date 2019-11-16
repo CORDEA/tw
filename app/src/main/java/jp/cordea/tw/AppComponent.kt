@@ -13,5 +13,6 @@ interface AppComponent {
         fun create(@BindsInstance application: Application): AppComponent
     }
 
+    fun loginActivitySubcomponentFactory(): LoginActivitySubcomponent.Factory
     fun mainActivitySubcomponentFactory(): MainActivitySubcomponent.Factory
 }
