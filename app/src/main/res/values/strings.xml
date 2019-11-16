@@ -5,4 +5,5 @@
     <string name="title_notifications">Notifications</string>
 
     <string name="home_login_button">Login</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>
