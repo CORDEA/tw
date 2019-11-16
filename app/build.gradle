@@ -8,6 +8,9 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
+
+    def props = new Properties()
+    file("app.properties").withInputStream { props.load(it) }
     defaultConfig {
         applicationId "jp.cordea.tw"
         minSdkVersion 24
@@ -15,6 +18,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "CONSUMER_KEY", props.getProperty("consumerKey")
+        buildConfigField "String", "CONSUMER_SECRET", props.getProperty("consumerSecret")
     }
     buildTypes {
         release {
