@@ -6,15 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.GroupieViewHolder
+import androidx.lifecycle.Observer
 import jp.cordea.tw.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -25,7 +22,7 @@ class HomeFragment : Fragment(),
     override lateinit var viewModelFactory: ViewModelFactory<HomeViewModel>
 
     private val viewModel by lazy { viewModel() }
-    private val adapter = GroupAdapter<GroupieViewHolder>()
+    private val adapter = HomeAdapter()
 
     override fun onAttach(context: Context) {
         (requireActivity() as MainActivity)
@@ -46,11 +43,9 @@ class HomeFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         recyclerView.adapter = adapter
 
-        launch {
-            viewModel.onData
-                .consumeEach { data ->
-                    adapter.addAll(data.map { HomeListItem(it) })
-                }
-        }
+        viewModel.onData
+            .observe(viewLifecycleOwner, Observer { data ->
+                adapter.submitList(data)
+            })
     }
 }
