@@ -8,6 +8,6 @@ import javax.inject.Provider
 @ExperimentalCoroutinesApi
 class HomeDataSourceFactory @Inject constructor(
     private val dataSource: Provider<HomeDataSource>
-) : DataSource.Factory<Long, HomeListItemModel>() {
-    override fun create(): DataSource<Long, HomeListItemModel> = dataSource.get()
+) : DataSource.Factory<Long, HomeListItem>() {
+    override fun create(): DataSource<Long, HomeListItem> = dataSource.get()
 }
