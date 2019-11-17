@@ -23,5 +23,5 @@ class StatusesRepository @Inject constructor() {
             )
         }
             .flowOn(Dispatchers.IO)
-            .map { it.body()!! }
+            .map { it.body() ?: emptyList() }
 }
