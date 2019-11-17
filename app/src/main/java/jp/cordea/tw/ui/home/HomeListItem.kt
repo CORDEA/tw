@@ -34,11 +34,11 @@ class HomeListItem(private val model: HomeListItemModel) : BindableItem<HomeList
     override fun bind(viewBinding: HomeListItemBinding, position: Int) {
         viewBinding.model = model
         viewBinding.image.isVisible = model.shouldShowImages
+        viewBinding.image2.isVisible = model.shouldShowSubImages
+        viewBinding.image3.isVisible = model.shouldShowSubImages
 
         if (model.shouldShowImages) {
             viewBinding.image1.load(model.images[0])
-            viewBinding.image2.isVisible = model.shouldShowSubImages
-            viewBinding.image3.isVisible = model.shouldShowSubImages
             if (model.shouldShowSubImages) {
                 viewBinding.image2.load(model.images[1])
                 viewBinding.image3.load(model.images[2])
