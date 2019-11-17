@@ -22,7 +22,7 @@ class HomeViewModel @Inject constructor(
         LivePagedListBuilder(
             HomeDataSourceFactory(Job(parent = job), repository),
             PagedList.Config.Builder()
-                .setPageSize(20)
+                .setPageSize(200)
                 .setEnablePlaceholders(true)
                 .build()
         ).build()
