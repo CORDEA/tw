@@ -10,6 +10,7 @@ data class HomeListItemModel(
 )
 
 class HomeListItem(private val model: HomeListItemModel) : BindableItem<HomeListItemBinding>() {
+    override fun getId(): Long = model.id
     override fun getLayout(): Int = R.layout.home_list_item
 
     override fun bind(viewBinding: HomeListItemBinding, position: Int) {
@@ -17,4 +18,5 @@ class HomeListItem(private val model: HomeListItemModel) : BindableItem<HomeList
     }
 
     override fun equals(other: Any?): Boolean = model == other
+    override fun hashCode(): Int = model.hashCode()
 }
