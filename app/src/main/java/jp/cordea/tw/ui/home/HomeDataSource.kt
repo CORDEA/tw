@@ -42,7 +42,7 @@ class HomeDataSource(
         repository.findAll(size, key)
             .map {
                 it.map { tweet ->
-                    HomeListItem(HomeListItemModel(tweet.id, tweet.text))
+                    HomeListItem(HomeListItemModel.from(tweet))
                 }
             }
 }
