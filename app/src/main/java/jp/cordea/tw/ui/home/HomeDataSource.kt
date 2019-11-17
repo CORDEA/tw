@@ -20,13 +20,15 @@ class HomeDataSource @Inject constructor(
         callback: LoadInitialCallback<HomeListItem>
     ) {
         launch {
-            load(null, callback)
+            load(params.requestedLoadSize, null)
+                .collect { callback.onResult(it) }
         }
     }
 
     override fun loadAfter(params: LoadParams<Long>, callback: LoadCallback<HomeListItem>) {
         launch {
-            load(params.key, callback)
+            load(params.requestedLoadSize, params.key)
+                .collect { callback.onResult(it) }
         }
     }
 
@@ -36,12 +38,11 @@ class HomeDataSource @Inject constructor(
 
     override fun getKey(item: HomeListItem): Long = item.id
 
-    private suspend fun load(key: Long?, callback: LoadCallback<HomeListItem>) =
-        repository.findAll(key)
+    private fun load(size: Int, key: Long?) =
+        repository.findAll(size, key)
             .map {
                 it.map { tweet ->
                     HomeListItem(HomeListItemModel(tweet.id, tweet.text))
                 }
             }
-            .collect { callback.onResult(it) }
 }

@@ -12,13 +12,13 @@ import javax.inject.Singleton
 @Singleton
 class StatusesRepository @Inject constructor() {
     @ExperimentalCoroutinesApi
-    fun findAll(maxId: Long?) =
+    fun findAll(count: Int, maxId: Long?) =
         flow {
             emit(
                 TwitterCore.getInstance()
                     .apiClient
                     .statusesService
-                    .homeTimeline(200, null, null, false, false, false, true)
+                    .homeTimeline(count, null, maxId, false, false, false, true)
                     .execute()
             )
         }
