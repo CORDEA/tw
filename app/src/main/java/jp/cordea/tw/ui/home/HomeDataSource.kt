@@ -28,6 +28,7 @@ class HomeDataSource @Inject constructor(
     override fun loadAfter(params: LoadParams<Long>, callback: LoadCallback<HomeListItem>) {
         launch {
             load(params.requestedLoadSize, params.key)
+                .map { it.drop(1) }
                 .collect { callback.onResult(it) }
         }
     }
