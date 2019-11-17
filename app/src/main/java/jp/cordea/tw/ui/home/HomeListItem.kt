@@ -5,6 +5,7 @@ import jp.cordea.tw.R
 import jp.cordea.tw.databinding.HomeListItemBinding
 
 class HomeListItemModel(
+    val id: Long,
     val body: String
 )
 

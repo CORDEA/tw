@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(
         val channel = ConflatedBroadcastChannel<List<HomeListItemModel>>()
         launch {
             repository.findAll(null)
-                .map { it.map { tweet -> HomeListItemModel(tweet.text) } }
+                .map { it.map { tweet -> HomeListItemModel(tweet.id, tweet.text) } }
                 .collect { channel.send(it) }
         }
         channel
