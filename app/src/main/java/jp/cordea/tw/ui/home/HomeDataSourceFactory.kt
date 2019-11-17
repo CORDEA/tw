@@ -1,13 +1,14 @@
 package jp.cordea.tw.ui.home
 
 import androidx.paging.DataSource
+import jp.cordea.tw.StatusesRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import javax.inject.Inject
-import javax.inject.Provider
+import kotlinx.coroutines.Job
 
 @ExperimentalCoroutinesApi
-class HomeDataSourceFactory @Inject constructor(
-    private val dataSource: Provider<HomeDataSource>
+class HomeDataSourceFactory(
+    private val job: Job,
+    private val repository: StatusesRepository
 ) : DataSource.Factory<Long, HomeListItem>() {
-    override fun create(): DataSource<Long, HomeListItem> = dataSource.get()
+    override fun create(): DataSource<Long, HomeListItem> = HomeDataSource(job, repository)
 }

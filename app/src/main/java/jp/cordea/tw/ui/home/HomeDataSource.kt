@@ -5,14 +5,13 @@ import jp.cordea.tw.StatusesRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 @ExperimentalCoroutinesApi
-class HomeDataSource @Inject constructor(
+class HomeDataSource(
+    job: Job,
     private val repository: StatusesRepository
 ) : ItemKeyedDataSource<Long, HomeListItem>(), CoroutineScope {
-    val job = Job()
     override val coroutineContext: CoroutineContext = Dispatchers.Main + job
 
     override fun loadInitial(
