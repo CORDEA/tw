@@ -1,6 +1,7 @@
 package jp.cordea.tw
 
 import dagger.Subcomponent
+import jp.cordea.tw.ui.home.HomeFragmentSubcomponent
 
 @Subcomponent
 interface MainActivitySubcomponent {
@@ -10,4 +11,6 @@ interface MainActivitySubcomponent {
     }
 
     fun inject(activity: MainActivity): MainActivity
+
+    fun homeFragmentSubcomponent(): HomeFragmentSubcomponent.Factory
 }
