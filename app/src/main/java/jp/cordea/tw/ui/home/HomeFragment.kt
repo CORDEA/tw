@@ -7,11 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import jp.cordea.tw.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -24,6 +29,7 @@ class HomeFragment : Fragment(),
 
     private val viewModel by lazy { viewModel() }
     private val adapter = HomeAdapter()
+    private val bottomSheetAdapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onAttach(context: Context) {
         (requireActivity() as MainActivity)
@@ -43,13 +49,25 @@ class HomeFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.adapter = adapter
+        bottomSheetRecyclerView.adapter = bottomSheetAdapter
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetRecyclerView)
 
         viewModel.onData
             .observe(viewLifecycleOwner, Observer { data ->
                 adapter.submitList(data)
             })
+
+        launch {
+            viewModel.onShowBottomSheet
+                .consumeEach { models ->
+                    bottomSheetAdapter.clear()
+                    bottomSheetAdapter.addAll(models.map { HomeBottomSheetItem(it) })
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                }
+        }
     }
 
     override fun onItemClick(urls: List<String>) {
+        viewModel.onItemClicked(urls)
     }
 }
