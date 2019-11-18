@@ -22,7 +22,6 @@ class StatusesRepository @Inject constructor() {
                     .execute()
             )
         }
-            .flowOn(Dispatchers.IO)
             .map {
                 if (it.body() == null) {
                     StatusesResult.Failure(it.errorBody()!!.string())

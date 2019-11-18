@@ -15,7 +15,7 @@ class HomeDataSource(
     private val repository: StatusesRepository,
     private val listItemFactory: HomeListItem.Factory
 ) : ItemKeyedDataSource<Long, HomeListItem>(), CoroutineScope {
-    override val coroutineContext: CoroutineContext = Dispatchers.Main + job
+    override val coroutineContext: CoroutineContext = Dispatchers.Unconfined + job
 
     override fun loadInitial(
         params: LoadInitialParams<Long>,
