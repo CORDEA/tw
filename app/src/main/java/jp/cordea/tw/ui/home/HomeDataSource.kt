@@ -2,9 +2,11 @@ package jp.cordea.tw.ui.home
 
 import androidx.paging.ItemKeyedDataSource
 import jp.cordea.tw.StatusesRepository
+import jp.cordea.tw.StatusesResult
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
 @ExperimentalCoroutinesApi
@@ -42,6 +44,15 @@ class HomeDataSource(
     private fun load(size: Int, key: Long?) =
         repository.findAll(size, key)
             .map {
-                it.map { tweet -> listItemFactory.create(HomeListItemModel.from(tweet)) }
+                when (it) {
+                    is StatusesResult.Success ->
+                        it.tweets.map { tweet ->
+                            listItemFactory.create(HomeListItemModel.from(tweet))
+                        }
+                    is StatusesResult.Failure -> {
+                        Timber.e(it.error)
+                        emptyList()
+                    }
+                }
             }
 }

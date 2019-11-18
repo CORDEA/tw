@@ -23,5 +23,11 @@ class StatusesRepository @Inject constructor() {
             )
         }
             .flowOn(Dispatchers.IO)
-            .map { it.body() ?: emptyList() }
+            .map {
+                if (it.body() == null) {
+                    StatusesResult.Failure(it.errorBody()!!.string())
+                } else {
+                    StatusesResult.Success(it.body()!!)
+                }
+            }
 }
