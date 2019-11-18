@@ -10,7 +10,8 @@ import kotlin.coroutines.CoroutineContext
 @ExperimentalCoroutinesApi
 class HomeDataSource(
     job: Job,
-    private val repository: StatusesRepository
+    private val repository: StatusesRepository,
+    private val listItemFactory: HomeListItem.Factory
 ) : ItemKeyedDataSource<Long, HomeListItem>(), CoroutineScope {
     override val coroutineContext: CoroutineContext = Dispatchers.Main + job
 
@@ -41,8 +42,6 @@ class HomeDataSource(
     private fun load(size: Int, key: Long?) =
         repository.findAll(size, key)
             .map {
-                it.map { tweet ->
-                    HomeListItem(HomeListItemModel.from(tweet))
-                }
+                it.map { tweet -> listItemFactory.create(HomeListItemModel.from(tweet)) }
             }
 }

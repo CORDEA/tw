@@ -13,14 +13,15 @@ import kotlin.coroutines.CoroutineContext
 
 @ExperimentalCoroutinesApi
 class HomeViewModel @Inject constructor(
-    private val repository: StatusesRepository
+    private val repository: StatusesRepository,
+    private val listItemFactory: HomeListItem.Factory
 ) : ViewModel(), CoroutineScope {
     private val job = Job()
     override val coroutineContext: CoroutineContext = Dispatchers.Main + job
 
     val onData by lazy {
         LivePagedListBuilder(
-            HomeDataSourceFactory(Job(parent = job), repository),
+            HomeDataSourceFactory(Job(parent = job), repository, listItemFactory),
             PagedList.Config.Builder()
                 .setPageSize(200)
                 .setEnablePlaceholders(true)

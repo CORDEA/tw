@@ -7,11 +7,13 @@ import com.twitter.sdk.android.tweetui.internal.TweetMediaUtils
 import com.xwray.groupie.databinding.BindableItem
 import jp.cordea.tw.R
 import jp.cordea.tw.databinding.HomeListItemBinding
+import javax.inject.Inject
 
 data class HomeListItemModel(
     val id: Long,
     val body: String,
-    val images: List<String>
+    val images: List<String>,
+    val urls: List<String>
 ) {
     companion object {
         fun from(tweet: Tweet) = HomeListItemModel(
@@ -19,15 +21,30 @@ data class HomeListItemModel(
             tweet.text,
             tweet.entities.media
                 .filter { it.type == TweetMediaUtils.PHOTO_TYPE }
-                .map { it.mediaUrlHttps }
+                .map { it.mediaUrlHttps },
+            tweet.entities.urls.map { it.url }
         )
     }
 
+    val clickable = urls.isNotEmpty()
     val shouldShowImages = images.isNotEmpty()
     val shouldShowSubImages = images.size > 2
 }
 
-class HomeListItem(private val model: HomeListItemModel) : BindableItem<HomeListItemBinding>() {
+class HomeListItem @Inject constructor(
+    private val listener: OnItemClickListener,
+    private val model: HomeListItemModel
+) : BindableItem<HomeListItemBinding>() {
+    class Factory @Inject constructor(
+        private val listener: OnItemClickListener
+    ) {
+        fun create(model: HomeListItemModel) = HomeListItem(listener, model)
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(urls: List<String>)
+    }
+
     override fun getId(): Long = model.id
     override fun getLayout(): Int = R.layout.home_list_item
 
@@ -42,6 +59,12 @@ class HomeListItem(private val model: HomeListItemModel) : BindableItem<HomeList
             if (model.shouldShowSubImages) {
                 viewBinding.image2.load(model.images[1])
                 viewBinding.image3.load(model.images[2])
+            }
+        }
+
+        if (model.clickable) {
+            viewBinding.root.setOnClickListener {
+                listener.onItemClick(model.urls)
             }
         }
     }

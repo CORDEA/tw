@@ -8,7 +8,9 @@ import kotlinx.coroutines.Job
 @ExperimentalCoroutinesApi
 class HomeDataSourceFactory(
     private val job: Job,
-    private val repository: StatusesRepository
+    private val repository: StatusesRepository,
+    private val listItemFactory: HomeListItem.Factory
 ) : DataSource.Factory<Long, HomeListItem>() {
-    override fun create(): DataSource<Long, HomeListItem> = HomeDataSource(job, repository)
+    override fun create(): DataSource<Long, HomeListItem> =
+        HomeDataSource(job, repository, listItemFactory)
 }

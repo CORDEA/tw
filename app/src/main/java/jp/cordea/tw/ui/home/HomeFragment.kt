@@ -17,7 +17,8 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class HomeFragment : Fragment(),
     CoroutineScope by MainScope(),
-    ViewModelInjectable<HomeViewModel> {
+    ViewModelInjectable<HomeViewModel>,
+    HomeListItem.OnItemClickListener {
     @Inject
     override lateinit var viewModelFactory: ViewModelFactory<HomeViewModel>
 
@@ -28,7 +29,7 @@ class HomeFragment : Fragment(),
         (requireActivity() as MainActivity)
             .subcomponent
             .homeFragmentSubcomponent()
-            .create()
+            .create(this)
             .inject(this)
         super.onAttach(context)
     }
@@ -47,5 +48,8 @@ class HomeFragment : Fragment(),
             .observe(viewLifecycleOwner, Observer { data ->
                 adapter.submitList(data)
             })
+    }
+
+    override fun onItemClick(urls: List<String>) {
     }
 }
