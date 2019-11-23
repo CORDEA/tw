@@ -29,7 +29,8 @@ import javax.inject.Inject
 class HomeFragment : Fragment(),
     CoroutineScope by MainScope(),
     ViewModelInjectable<HomeViewModel>,
-    HomeListItem.OnItemClickListener {
+    HomeListItem.OnItemClickListener,
+    TweetBottomSheetDialogFragment.OnTweetListener {
     @Inject
     override lateinit var viewModelFactory: ViewModelFactory<HomeViewModel>
 
@@ -88,6 +89,9 @@ class HomeFragment : Fragment(),
 
     override fun onItemClick(urls: List<String>) {
         viewModel.onItemClicked(urls)
+    }
+
+    override fun onTweet(text: String) {
     }
 
     override fun onDestroy() {

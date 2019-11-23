@@ -28,4 +28,7 @@ interface HomeFragmentSubcomponent {
 interface HomeFragmentBindModule {
     @Binds
     fun bindOnItemClickListener(fragment: HomeFragment): HomeListItem.OnItemClickListener
+
+    @Binds
+    fun bindOnTweetListener(fragment: HomeFragment): TweetBottomSheetDialogFragment.OnTweetListener
 }
