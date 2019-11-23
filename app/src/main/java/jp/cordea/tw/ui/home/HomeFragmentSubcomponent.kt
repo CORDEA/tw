@@ -4,6 +4,8 @@ import dagger.Binds
 import dagger.BindsInstance
 import dagger.Module
 import dagger.Subcomponent
+import jp.cordea.tw.ui.tweet.TweetBottomSheetDialogFragment
+import jp.cordea.tw.ui.tweet.TweetBottomSheetDialogFragmentSubcomponent
 
 @Subcomponent(
     modules = [
@@ -17,6 +19,9 @@ interface HomeFragmentSubcomponent {
     }
 
     fun inject(fragment: HomeFragment): HomeFragment
+
+    fun tweetBottomSheetDialogFragmentSubcomponent(
+    ): TweetBottomSheetDialogFragmentSubcomponent.Factory
 }
 
 @Module

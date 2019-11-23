@@ -15,6 +15,7 @@ import jp.cordea.tw.R
 import jp.cordea.tw.ViewModelFactory
 import jp.cordea.tw.ViewModelInjectable
 import jp.cordea.tw.ui.main.MainActivity
+import jp.cordea.tw.ui.tweet.TweetBottomSheetDialogFragment
 import jp.cordea.tw.viewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.*
@@ -32,16 +33,19 @@ class HomeFragment : Fragment(),
     @Inject
     override lateinit var viewModelFactory: ViewModelFactory<HomeViewModel>
 
+    lateinit var subcomponent: HomeFragmentSubcomponent
+
     private val viewModel by lazy { viewModel() }
     private val adapter = HomeAdapter()
     private val bottomSheetAdapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onAttach(context: Context) {
-        (requireActivity() as MainActivity)
-            .subcomponent
-            .homeFragmentSubcomponent()
-            .create(this)
-            .inject(this)
+        subcomponent =
+            (requireActivity() as MainActivity)
+                .subcomponent
+                .homeFragmentSubcomponent()
+                .create(this)
+        subcomponent.inject(this)
         super.onAttach(context)
     }
 
