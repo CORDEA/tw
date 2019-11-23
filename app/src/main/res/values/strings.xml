@@ -9,4 +9,5 @@
 
     <string name="home_tweet_failed">Failed to tweet.</string>
     <string name="home_tweet_succeeded">Succeeded in tweeting.</string>
+    <string name="screen_name_format">\@%s</string>
 </resources>
