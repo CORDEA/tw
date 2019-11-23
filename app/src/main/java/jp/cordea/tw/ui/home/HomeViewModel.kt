@@ -31,13 +31,14 @@ class HomeViewModel @Inject constructor(
     }
 
     val onShowBottomSheet = Channel<List<HomeBottomSheetItemModel>>()
+    val onShowTweetBottomSheet = Channel<Unit>()
 
     fun onItemClicked(urls: List<String>) {
         onShowBottomSheet.offer(urls.map { HomeBottomSheetItemModel(it) })
     }
 
     fun onFabClicked() {
-
+        onShowTweetBottomSheet.offer(Unit)
     }
 
     override fun onCleared() {

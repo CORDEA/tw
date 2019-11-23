@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -16,13 +17,10 @@ import jp.cordea.tw.ViewModelInjectable
 import jp.cordea.tw.ui.main.MainActivity
 import jp.cordea.tw.viewModel
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import ru.ldralighieri.corbind.view.clicks
 import javax.inject.Inject
 
@@ -75,9 +73,21 @@ class HomeFragment : Fragment(),
                     bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 }
         }
+        launch {
+            for (_ in viewModel.onShowTweetBottomSheet) {
+                findNavController().navigate(
+                    R.id.action_navigation_home_to_tweetBottomSheetDialogFragment
+                )
+            }
+        }
     }
 
     override fun onItemClick(urls: List<String>) {
         viewModel.onItemClicked(urls)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cancel()
     }
 }
