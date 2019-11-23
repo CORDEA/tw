@@ -20,7 +20,7 @@ class StatusesRepository @Inject constructor() {
         flow {
             emit(
                 service
-                    .homeTimeline(count, null, maxId, false, false, false, true)
+                    .homeTimeline(count, null, maxId, true, true, false, true)
                     .execute()
             )
         }
