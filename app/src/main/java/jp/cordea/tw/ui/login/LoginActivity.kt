@@ -1,8 +1,10 @@
-package jp.cordea.tw
+package jp.cordea.tw.ui.login
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import jp.cordea.tw.*
+import jp.cordea.tw.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi

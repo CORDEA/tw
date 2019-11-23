@@ -1,4 +1,4 @@
-package jp.cordea.tw
+package jp.cordea.tw.ui.main
 
 import dagger.Subcomponent
 import jp.cordea.tw.ui.home.HomeFragmentSubcomponent

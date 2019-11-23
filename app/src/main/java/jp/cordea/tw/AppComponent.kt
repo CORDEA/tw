@@ -3,6 +3,8 @@ package jp.cordea.tw
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
+import jp.cordea.tw.ui.login.LoginActivitySubcomponent
+import jp.cordea.tw.ui.main.MainActivitySubcomponent
 import javax.inject.Singleton
 
 @Singleton

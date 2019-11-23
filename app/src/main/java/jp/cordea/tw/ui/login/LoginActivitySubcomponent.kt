@@ -1,4 +1,4 @@
-package jp.cordea.tw
+package jp.cordea.tw.ui.login
 
 import dagger.Subcomponent
 
