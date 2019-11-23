@@ -22,10 +22,10 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="jp.cordea.tw.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_profile"
+        android:name="jp.cordea.tw.ui.profile.ProfileFragment"
+        android:label="@string/profile_title"
+        tools:layout="@layout/profile_fragment" />
     <dialog
         android:id="@+id/tweetBottomSheetDialogFragment"
         android:name="jp.cordea.tw.ui.tweet.TweetBottomSheetDialogFragment"
