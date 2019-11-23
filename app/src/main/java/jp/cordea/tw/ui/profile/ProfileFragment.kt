@@ -4,28 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import jp.cordea.tw.R
+import jp.cordea.tw.ViewModelFactory
+import jp.cordea.tw.ViewModelInjectable
+import javax.inject.Inject
 
-class ProfileFragment : Fragment() {
-
-    private lateinit var profileViewModel: ProfileViewModel
+class ProfileFragment : Fragment(), ViewModelInjectable<ProfileViewModel> {
+    @Inject
+    override lateinit var viewModelFactory: ViewModelFactory<ProfileViewModel>
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        profileViewModel =
-            ViewModelProviders.of(this).get(ProfileViewModel::class.java)
-        val root = inflater.inflate(R.layout.profile_fragment, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        profileViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
-        return root
-    }
+    ): View = inflater.inflate(R.layout.profile_fragment, container, false)
 }
