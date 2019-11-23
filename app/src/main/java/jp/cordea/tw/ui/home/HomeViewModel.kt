@@ -8,6 +8,7 @@ import jp.cordea.tw.StatusesUpdateResult
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -48,6 +49,7 @@ class HomeViewModel @Inject constructor(
     fun onTweet(status: String) {
         launch {
             repository.update(status)
+                .flowOn(Dispatchers.IO)
                 .collect {
                     onNavigation.offer(
                         when (it) {
