@@ -22,7 +22,7 @@ data class HomeListItemModel(
             tweet.entities.media
                 .filter { it.type == TweetMediaUtils.PHOTO_TYPE }
                 .map { it.mediaUrlHttps },
-            tweet.entities.urls.map { it.url }
+            tweet.entities.urls.map { it.expandedUrl }
         )
     }
 
