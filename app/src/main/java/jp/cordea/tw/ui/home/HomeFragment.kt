@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -87,12 +88,14 @@ class HomeFragment : Fragment(),
         }
         launch {
             for (e in viewModel.onSucceededTweet) {
-
+                Toast.makeText(requireContext(), R.string.home_tweet_succeeded, Toast.LENGTH_SHORT)
+                    .show()
             }
         }
         launch {
             for (e in viewModel.onFailedTweet) {
-
+                Toast.makeText(requireContext(), R.string.home_tweet_failed, Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
