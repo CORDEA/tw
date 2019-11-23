@@ -10,4 +10,8 @@
     <string name="home_tweet_failed">Failed to tweet.</string>
     <string name="home_tweet_succeeded">Succeeded in tweeting.</string>
     <string name="screen_name_format">\@%s</string>
+
+    <string name="profile_tweets">Tweets</string>
+    <string name="profile_follows">Follows</string>
+    <string name="profile_likes">Likes</string>
 </resources>

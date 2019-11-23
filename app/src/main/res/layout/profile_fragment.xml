@@ -23,6 +23,7 @@
         android:textAlignment="center"
         android:textColor="@color/primaryTextColor"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image"
@@ -40,4 +41,92 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name"
         tools:text="Android" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="44dp"
+        android:textAlignment="center"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/twitterId" />
+
+    <TextView
+        android:id="@+id/follows_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/profile_follows"
+        android:textAlignment="center"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/tweets_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description" />
+
+    <TextView
+        android:id="@+id/follows"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/follows_label"
+        app:layout_constraintStart_toStartOf="@id/follows_label"
+        app:layout_constraintTop_toBottomOf="@id/follows_label"
+        tools:text="0" />
+
+    <TextView
+        android:id="@+id/tweets_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_tweets"
+        android:textAlignment="center"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/likes_label"
+        app:layout_constraintStart_toEndOf="@id/follows_label"
+        app:layout_constraintTop_toTopOf="@id/follows_label" />
+
+    <TextView
+        android:id="@+id/tweets"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/tweets_label"
+        app:layout_constraintStart_toStartOf="@id/tweets_label"
+        app:layout_constraintTop_toTopOf="@id/follows"
+        tools:text="0" />
+
+    <TextView
+        android:id="@+id/likes_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_likes"
+        android:textAlignment="center"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tweets_label"
+        app:layout_constraintTop_toTopOf="@id/follows_label" />
+
+    <TextView
+        android:id="@+id/likes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/likes_label"
+        app:layout_constraintStart_toStartOf="@id/likes_label"
+        app:layout_constraintTop_toTopOf="@id/follows"
+        tools:text="0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
