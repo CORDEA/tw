@@ -85,6 +85,16 @@ class HomeFragment : Fragment(),
                 )
             }
         }
+        launch {
+            for (e in viewModel.onSucceededTweet) {
+
+            }
+        }
+        launch {
+            for (e in viewModel.onFailedTweet) {
+
+            }
+        }
     }
 
     override fun onItemClick(urls: List<String>) {
@@ -92,6 +102,7 @@ class HomeFragment : Fragment(),
     }
 
     override fun onTweet(text: String) {
+        viewModel.onTweet(text)
     }
 
     override fun onDestroy() {

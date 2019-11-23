@@ -4,11 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import jp.cordea.tw.StatusesRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
+import jp.cordea.tw.StatusesUpdateResult
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -32,6 +31,8 @@ class HomeViewModel @Inject constructor(
 
     val onShowBottomSheet = Channel<List<HomeBottomSheetItemModel>>()
     val onShowTweetBottomSheet = Channel<Unit>()
+    val onSucceededTweet = Channel<Unit>()
+    val onFailedTweet = Channel<String>()
 
     fun onItemClicked(urls: List<String>) {
         onShowBottomSheet.offer(urls.map { HomeBottomSheetItemModel(it) })
@@ -39,6 +40,20 @@ class HomeViewModel @Inject constructor(
 
     fun onFabClicked() {
         onShowTweetBottomSheet.offer(Unit)
+    }
+
+    fun onTweet(status: String) {
+        launch {
+            repository.update(status)
+                .collect {
+                    when (it) {
+                        StatusesUpdateResult.Success ->
+                            onSucceededTweet.offer(Unit)
+                        is StatusesUpdateResult.Failure ->
+                            onFailedTweet.offer(it.error)
+                    }
+                }
+        }
     }
 
     override fun onCleared() {
