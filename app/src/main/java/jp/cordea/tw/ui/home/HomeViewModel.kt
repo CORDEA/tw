@@ -29,29 +29,34 @@ class HomeViewModel @Inject constructor(
         ).build()
     }
 
-    val onShowBottomSheet = Channel<List<HomeBottomSheetItemModel>>()
-    val onShowTweetBottomSheet = Channel<Unit>()
-    val onSucceededTweet = Channel<Unit>()
-    val onFailedTweet = Channel<String>()
+    val onNavigation = Channel<Navigation>()
 
     fun onItemClicked(urls: List<String>) {
-        onShowBottomSheet.offer(urls.map { HomeBottomSheetItemModel(it) })
+        onNavigation.offer(
+            if (urls.size > 1) {
+                Navigation.ShowLinksBottomSheet(urls.map { HomeBottomSheetItemModel(it) })
+            } else {
+                Navigation.OpenLink(urls.first())
+            }
+        )
     }
 
     fun onFabClicked() {
-        onShowTweetBottomSheet.offer(Unit)
+        onNavigation.offer(Navigation.ShowTweetBottomSheet)
     }
 
     fun onTweet(status: String) {
         launch {
             repository.update(status)
                 .collect {
-                    when (it) {
-                        StatusesUpdateResult.Success ->
-                            onSucceededTweet.offer(Unit)
-                        is StatusesUpdateResult.Failure ->
-                            onFailedTweet.offer(it.error)
-                    }
+                    onNavigation.offer(
+                        when (it) {
+                            StatusesUpdateResult.Success ->
+                                Navigation.ShowTweetSuccessToast
+                            is StatusesUpdateResult.Failure ->
+                                Navigation.ShowTweetFailureToast(it.error)
+                        }
+                    )
                 }
         }
     }
@@ -59,5 +64,16 @@ class HomeViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         job.cancel()
+    }
+
+    sealed class Navigation {
+        class OpenLink(val url: String) : Navigation()
+        class ShowLinksBottomSheet(
+            val itemViewModels: List<HomeBottomSheetItemModel>
+        ) : Navigation()
+
+        object ShowTweetBottomSheet : Navigation()
+        object ShowTweetSuccessToast : Navigation()
+        class ShowTweetFailureToast(val error: String) : Navigation()
     }
 }

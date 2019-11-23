@@ -15,12 +15,12 @@ import com.xwray.groupie.GroupieViewHolder
 import jp.cordea.tw.R
 import jp.cordea.tw.ViewModelFactory
 import jp.cordea.tw.ViewModelInjectable
+import jp.cordea.tw.ui.home.HomeViewModel.Navigation
 import jp.cordea.tw.ui.main.MainActivity
 import jp.cordea.tw.ui.tweet.TweetBottomSheetDialogFragment
 import jp.cordea.tw.viewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.ldralighieri.corbind.view.clicks
@@ -71,31 +71,35 @@ class HomeFragment : Fragment(),
         fab.clicks()
             .onEach { viewModel.onFabClicked() }
             .launchIn(this)
+
         launch {
-            viewModel.onShowBottomSheet
-                .consumeEach { models ->
-                    bottomSheetAdapter.clear()
-                    bottomSheetAdapter.addAll(models.map { HomeBottomSheetItem(it) })
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            for (navigation in viewModel.onNavigation) {
+                when (navigation) {
+                    is Navigation.OpenLink -> TODO()
+                    is Navigation.ShowLinksBottomSheet -> {
+                        bottomSheetAdapter.clear()
+                        bottomSheetAdapter.addAll(
+                            navigation.itemViewModels.map { HomeBottomSheetItem(it) }
+                        )
+                        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                    Navigation.ShowTweetBottomSheet ->
+                        findNavController().navigate(
+                            R.id.action_navigation_home_to_tweetBottomSheetDialogFragment
+                        )
+                    Navigation.ShowTweetSuccessToast ->
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.home_tweet_succeeded,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    is Navigation.ShowTweetFailureToast ->
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.home_tweet_failed,
+                            Toast.LENGTH_SHORT
+                        ).show()
                 }
-        }
-        launch {
-            for (e in viewModel.onShowTweetBottomSheet) {
-                findNavController().navigate(
-                    R.id.action_navigation_home_to_tweetBottomSheetDialogFragment
-                )
-            }
-        }
-        launch {
-            for (e in viewModel.onSucceededTweet) {
-                Toast.makeText(requireContext(), R.string.home_tweet_succeeded, Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-        launch {
-            for (e in viewModel.onFailedTweet) {
-                Toast.makeText(requireContext(), R.string.home_tweet_failed, Toast.LENGTH_SHORT)
-                    .show()
             }
         }
     }
