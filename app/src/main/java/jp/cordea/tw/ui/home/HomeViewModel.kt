@@ -36,6 +36,10 @@ class HomeViewModel @Inject constructor(
         onShowBottomSheet.offer(urls.map { HomeBottomSheetItemModel(it) })
     }
 
+    fun onFabClicked() {
+
+    }
+
     override fun onCleared() {
         super.onCleared()
         job.cancel()

@@ -7,7 +7,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import jp.cordea.tw.*
+import jp.cordea.tw.App
+import jp.cordea.tw.R
+import jp.cordea.tw.ViewModelFactory
+import jp.cordea.tw.ViewModelInjectable
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -38,8 +41,5 @@ class MainActivity : AppCompatActivity(), ViewModelInjectable<MainViewModel> {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        val viewModel = viewModel()
-        fab.setOnClickListener { viewModel.clickedFab() }
     }
 }

@@ -10,14 +10,20 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import jp.cordea.tw.*
+import jp.cordea.tw.R
+import jp.cordea.tw.ViewModelFactory
+import jp.cordea.tw.ViewModelInjectable
 import jp.cordea.tw.ui.main.MainActivity
+import jp.cordea.tw.viewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import ru.ldralighieri.corbind.view.clicks
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -58,6 +64,9 @@ class HomeFragment : Fragment(),
                 adapter.submitList(data)
             })
 
+        fab.clicks()
+            .onEach { viewModel.onFabClicked() }
+            .launchIn(this)
         launch {
             viewModel.onShowBottomSheet
                 .consumeEach { models ->
