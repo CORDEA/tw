@@ -74,7 +74,7 @@ class HomeFragment : Fragment(),
                 }
         }
         launch {
-            for (_ in viewModel.onShowTweetBottomSheet) {
+            for (e in viewModel.onShowTweetBottomSheet) {
                 findNavController().navigate(
                     R.id.action_navigation_home_to_tweetBottomSheetDialogFragment
                 )
