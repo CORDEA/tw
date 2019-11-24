@@ -9,11 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="jp.cordea.tw.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_navigation_home_to_tweetBottomSheetDialogFragment"
-            app:destination="@id/tweetBottomSheetDialogFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -26,8 +22,4 @@
         android:name="jp.cordea.tw.ui.profile.ProfileFragment"
         android:label="@string/profile_title"
         tools:layout="@layout/profile_fragment" />
-    <dialog
-        android:id="@+id/tweetBottomSheetDialogFragment"
-        android:name="jp.cordea.tw.ui.tweet.TweetBottomSheetDialogFragment"
-        android:label="TweetBottomSheetDialogFragment" />
 </navigation>

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -84,9 +83,7 @@ class HomeFragment : Fragment(),
                         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                     }
                     Navigation.ShowTweetBottomSheet ->
-                        findNavController().navigate(
-                            R.id.action_navigation_home_to_tweetBottomSheetDialogFragment
-                        )
+                        TweetBottomSheetDialogFragment.newInstance().show(childFragmentManager)
                     Navigation.ShowTweetSuccessToast ->
                         Toast.makeText(
                             requireContext(),
