@@ -7,6 +7,7 @@
     <string name="home_login_button">Login</string>
     <string name="title_activity_login">LoginActivity</string>
 
+    <string name="tweet_bottom_sheet_button">Tweet</string>
     <string name="home_tweet_failed">Failed to tweet.</string>
     <string name="home_tweet_succeeded">Succeeded in tweeting.</string>
     <string name="screen_name_format">\@%s</string>
