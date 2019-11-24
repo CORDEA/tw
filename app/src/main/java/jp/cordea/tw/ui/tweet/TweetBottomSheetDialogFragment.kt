@@ -43,7 +43,10 @@ class TweetBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        button.setOnClickListener { listener.onTweet(textInputLayout.editText!!.text.toString()) }
+        button.setOnClickListener {
+            listener.onTweet(textInputLayout.editText!!.text.toString())
+            dismiss()
+        }
     }
 
     fun show(manager: FragmentManager) {
