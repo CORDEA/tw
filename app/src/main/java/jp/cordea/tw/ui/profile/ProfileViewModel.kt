@@ -26,7 +26,16 @@ class ProfileViewModel @Inject constructor(
             .map { (it as AccountResult.Success).user }
             .flowOn(Dispatchers.IO)
             .onEach {
-                channel.offer(Model(it.profileImageUrl, it.name, it.screenName))
+                channel.offer(
+                    Model(
+                        it.profileImageUrl,
+                        it.name,
+                        it.screenName,
+                        it.friendsCount,
+                        it.statusesCount,
+                        it.favouritesCount
+                    )
+                )
             }
             .launchIn(this)
         channel
@@ -41,8 +50,14 @@ class ProfileViewModel @Inject constructor(
     class Model(
         val imageUrl: String,
         val name: String,
-        private val screenName: String
+        private val screenName: String,
+        private val follows: Int,
+        private val tweets: Int,
+        private val likes: Int
     ) {
         fun getId(context: Context) = context.getString(R.string.screen_name_format, screenName)
+        fun getFollows(context: Context) = context.getString(R.string.profile_number_format, follows)
+        fun getTweets(context: Context) = context.getString(R.string.profile_number_format, tweets)
+        fun getLikes(context: Context) = context.getString(R.string.profile_number_format, likes)
     }
 }

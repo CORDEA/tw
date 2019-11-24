@@ -49,6 +49,9 @@ class ProfileFragment : Fragment(),
                 image.load(e.imageUrl)
                 name.text = e.name
                 twitterId.text = e.getId(requireContext())
+                likes.text = e.getLikes(requireContext())
+                tweets.text = e.getTweets(requireContext())
+                follows.text = e.getFollows(requireContext())
             }
         }
     }

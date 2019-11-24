@@ -14,4 +14,5 @@
     <string name="profile_tweets">Tweets</string>
     <string name="profile_follows">Follows</string>
     <string name="profile_likes">Likes</string>
+    <string name="profile_number_format">%,d</string>
 </resources>
